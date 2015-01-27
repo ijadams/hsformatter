@@ -16,9 +16,13 @@
 	<script src="bower_components/pickadate/lib/picker.time.js"></script>
 	<script src="bower_components/pickadate/lib/picker.date.js"></script>
 
-	<script src="js/moment.js"></script>
 
 <style type="text/css">
+#errmsg
+{
+color: red;
+padding-top: 5px;
+}
 </style>
 
 </head>
@@ -39,41 +43,66 @@
 		</button>
 	</div>
 
-	<!-- Moment -->
-	<center>
-		<form>
-		<input type="text" name="socialmedia" id="socialmedia" style="width:10%;" />
-		<input type="submit">
-		</form>
-		<!-- container for moment js output -->
-			<h2>Moment Date</h2>
-			<div id ="displayMoment"></div>
+<!-- 
+	<div class="nContainer">
+		<h2>How Many Times Do You Need To Generate?</h2>
+			<input type="text" name="quantity" id="quantity" style="width:5%;" />&nbsp;<span id="errmsg"></span>
+	</div>
+
+	<br>
+   <center>
+   	<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+   </center>
+
+-->
+
+
+	<!-- Papa Parse
+    <script src="bower_components/papaparse/papaparse.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+			<script>
+			  var data;
+			 
+			  function handleFileSelect(evt) {
+			    var file = evt.target.files[0];
+			 
+			    Papa.parse(file, {
+			      header: true,
+			      dynamicTyping: true,
+			      complete: function(results) {
+			        data = results;
+			      }
+			    });
+			  }
+			 
+			  $(document).ready(function(){
+			    $("#csv-file").change(handleFileSelect);
+			  });
+			</script>
+		<input type="file" id="csv-file" name="files"/>
 
 
 
 
-		<script type="text/javascript">
-			(function()
-			{
-			  // instantiate a moment object
-			  var NowMoment = moment();
-			  
-	
-			  
-			  // display value of moment object in #displayMoment div
-			  var eDisplayMoment = document.getElementById('displayMoment');
-			  eDisplayMoment.innerHTML = NowMoment;
-			  
+   <div class="parse">
+   		<div class="input-area" id="input-string">
+				<textarea id="input" placeholder="String input">
+							Column 1,Column 2,Column 3,Column 4
+							1-1,1-2,1-3,1-4
+							2-1,2-2,2-3,2-4
+							3-1,3-2,3-3,3-4
+							40,41,42,43
+							"Quoted field",No quotes,"Foo","bar",extra
+							"Field quoted with
+							line break"
+				</textarea>
+		
+					<br><br>			
 
-			})();
-		</script>
-
-
-
-	</center>
-
-	<!-- End Moment -->
-
+				<button type="submit" id="submit-parse" class="btn btn-primary btn-lg">Parse</button>
+   			</div>
+   	</div>
+ -->
 <script>
 $('.datepicker').pickadate();
 $('.timepicker').pickatime();
