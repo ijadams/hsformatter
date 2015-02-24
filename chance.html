@@ -1,0 +1,39 @@
+
+<html>
+  <head>
+    <script src="js/chance.js"></script> 
+  </head>
+
+  <body>
+   <div style="display:inline-block;">
+	<p><span id="hour"></span>:<span id="min"></span></p>	
+
+
+<div id="displayTime"></div>
+
+
+<script>
+
+// Use Chance
+var mingen = chance.minute();
+document.getElementById("min").innerHTML = mingen;
+
+//Gen Hour
+var hourgen = chance.hour({twentyfour: true, min:9, max:17 });
+document.getElementById("hour").innerHTML = hourgen;
+
+
+          
+ 	 function genTimesNow () {
+			 		for (i = 0; i < 10; i++){
+			 				 var newhour = chance.hour({twentyfour: true, min:9, max:17 });
+			 				 var newmin = chance.minute()
+			 				 var display = newhour + ":" + newmin;
+							 console.log(display);			
+			 		}
+			 		document.getElementById("displayTime").innerHTML = display;
+
+		}
+
+
+</script>

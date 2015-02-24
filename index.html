@@ -15,8 +15,8 @@
 	<script src="bower_components/pickadate/lib/picker.js"></script>
 	<script src="bower_components/pickadate/lib/picker.time.js"></script>
 	<script src="bower_components/pickadate/lib/picker.date.js"></script>
-
-	<script src="js/moment.js"></script>
+	<script src="js/papaparse.js"></script>
+	<script src="js/chance.js"></script>
 
 <style type="text/css">
 </style>
@@ -31,65 +31,85 @@
 
 	<div class="tfield">
 		<h2>Range</h2>
-		<input class="timepicker" type="text" placeholder="From"><br>
-		<input class="timepicker" type="text" placeholder="To">
+		<input class="timepicker" id="from" type="text" placeholder="From"><br>
+		<input class="timepicker" id="to" type="text" placeholder="To">
 		<br>
-		<button type="button" class="btn btn-default btn-lg">
+		<button type="button" onclick="gentimes()" class="btn btn-default btn-lg">
 		  	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 		</button>
 	</div>
 
-	<!-- Moment -->
+	<!-- Parse -->
 	<center>
-		<form>
-		<input type="text" name="socialmedia" id="socialmedia" style="width:10%;" />
-		<input type="submit">
-		</form>
-		<!-- container for moment js output -->
-			<h2>Moment Date</h2>
-			<div id ="displayMoment"></div>
+			<h3>Content</h3>
 
-
-
-
-		<script type="text/javascript">
-			(function()
-			{
-			  // instantiate a moment object
-			  var NowMoment = moment();
-			  
-	
-			  
-			  // display value of moment object in #displayMoment div
-			  var eDisplayMoment = document.getElementById('displayMoment');
-			  eDisplayMoment.innerHTML = NowMoment;
-			  
-
-			})();
-		</script>
-
-
+					<textarea id="contentCal">Status	Weekday	Date to Post	"[X] Posts/Month
+Post #"	Category	Update	"Link to media (if applicable)
+(image, video, article, website, etc)"	Additional Photo	
+Content QA'd	Thursday	1		NEW YEAR
+					</textarea>
+					<br>
+					<button type="button" onclick="myFunction()">Parse</button>
+					<p id="parsedContent"></p>
 
 	</center>
 
 	<!-- End Moment -->
 
 <script>
-$('.datepicker').pickadate();
-$('.timepicker').pickatime();
-</script> 
-<script type="text/javascript">
-$(document).ready(function () {
-  //called when key is pressed in textbox
-  $("#quantity").keypress(function (e) {
-     //if the letter is not digit then display error and don't type anything
-     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-        //display error message
-        $("#errmsg").html("Digits Only").show().fadeOut("slow");
-               return false;
-    }
-   });
-});
+	  //Gen Times
+    function gentimes(){
+           x = document.getElementById('from').value;
+           y = document.getElementById('to').value;
+           console.log(x, y)
+           return x + y;
+         }
+
+
+
+		// Date/Time Picker
+			$('.datepicker').pickadate();
+			$('.timepicker').pickatime();
+			</script> 
+			<script type="text/javascript">
+			var time_range;
+
+			$(document).ready(function () {
+			  //called when key is pressed in textbox
+			  $("#quantity").keypress(function (e) {
+			     //if the letter is not digit then display error and don't type anything
+			     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+			        //display error message
+			        $("#errmsg").html("Digits Only").show().fadeOut("slow");
+			               return false;
+			    }
+			   });
+			});
+			//Generate random time in given range
+			$( "#target" ).submit(function( event ) {
+				  alert( "Handler for .submit() called." );
+				  event.preventDefault();
+				});
+
+		// End Date/Time Picker
+
+		// Start Parse
+			function myFunction() {
+			    var csvString = document.getElementById("contentCal").value;
+              var output = '';
+              var y = Papa.parse(csvString, {
+                step: function(results) {
+                  output += results.data[0][3] + ',' + results.data[0][0] + '<br>';
+                  console.log("Row:", results.data[0]);
+                }
+              });
+					    document.getElementById("parsedContent").innerHTML = output;
+					}
+		// End Parse
+
+		
+
+
 </script>
 
 
