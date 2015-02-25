@@ -31,12 +31,17 @@
 
 	<div class="tfield">
 		<h2>Range</h2>
-		<input class="timepicker" id="from" type="text" placeholder="From"><br>
+		<input class="timepicker" name="time_input" id="from" type="text" placeholder="From"><br>
+		<input type="hidden" name="prefix__time_input__suffix" id="from2">
 		<input class="timepicker" id="to" type="text" placeholder="To">
 		<br>
-		<button type="button" onclick="gentimes()" class="btn btn-default btn-lg">
+		<button type="button" onclick="genTimesNow()" class="btn btn-default btn-lg">
 		  	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 		</button>
+		 <div style="display:inline-block;">
+			<p><span id="hour"></span>:<span id="min"></span></p>	
+			<div id="displayTime"></div>
+		</div>
 	</div>
 
 	<!-- Parse -->
@@ -57,21 +62,44 @@ Content QA'd	Thursday	1		NEW YEAR
 	<!-- End Moment -->
 
 <script>
-	  //Gen Times
-    function gentimes(){
-           x = document.getElementById('from').value;
-           y = document.getElementById('to').value;
-           console.log(x, y)
-           return x + y;
-         }
+
+		// Use Chance
+		var mingen = chance.minute();
+		document.getElementById("min").innerHTML = mingen;
+
+		//Gen Hour
+		var hourgen = chance.hour({twentyfour: true, min:9, max:17 });
+		document.getElementById("hour").innerHTML = hourgen;
 
 
+		//Start Array Loop
 
-		// Date/Time Picker
-			$('.datepicker').pickadate();
-			$('.timepicker').pickatime();
-			</script> 
-			<script type="text/javascript">
+
+		 	 function genTimesNow () {
+		 	 			var arr = new Array;
+						var floor = document.getElementById('from').value;
+						var roof = document.getElementById('to').value;
+					 		for (i = 0; i < 10; i++){
+					 				 var newhour = chance.hour({twentyfour: true, min:floor, max:roof });
+					 				 var newmin = chance.minute()
+					 				 var display = newhour + ":" + newmin;
+					 				 arr[i] = display; 
+					 		}
+					 		document.getElementById("displayTime").innerHTML = arr;
+
+				}
+
+				// Date/Time Picker
+					$('.datepicker').pickadate();
+					$('.timepicker').pickatime({
+					  // Escape any “rule” characters with an exclamation mark (!).
+					  format: 'T!ime selected: h:i a',
+					  formatLabel: '<b>h</b>:i <!i>a</!i>',
+					  formatSubmit: 'HH',
+					  hiddenPrefix: 'prefix__',
+					  hiddenSuffix: '__suffix'
+					})
+
 			var time_range;
 
 			$(document).ready(function () {
@@ -107,7 +135,7 @@ Content QA'd	Thursday	1		NEW YEAR
 					}
 		// End Parse
 
-		
+
 
 
 </script>
