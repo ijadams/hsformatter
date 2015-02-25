@@ -31,8 +31,8 @@
 
 	<div class="tfield">
 		<h2>Range</h2>
-		<input class="timepicker" name="from_input" id="from" type="text" placeholder="From"><br>
-		<input class="timepicker" name="to_input" id="to" type="text" placeholder="To">
+		<input class="timepicker" name="from_time" id="from" type="text" placeholder="From"><br>
+		<input class="timepicker" name="to_time" id="to" type="text" placeholder="To">
 		<br>
 		<button type="button" onclick="genTimesNow()" class="btn btn-default btn-lg">
 		  	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -61,6 +61,7 @@ Content QA'd	Thursday	1		NEW YEAR
 	<!-- End Moment -->
 
 <script>
+
 
 		// Use Chance
 		var mingen = chance.minute();
@@ -135,9 +136,6 @@ Content QA'd	Thursday	1		NEW YEAR
 					    document.getElementById("parsedContent").innerHTML = output;
 					}
 		// End Parse
-
-
-
 
 </script>
 
