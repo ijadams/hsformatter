@@ -78,7 +78,7 @@
 
 				 // Format date of posting
 				 var posting_date = moment(new Date(year, month, row[2]));
-				 var posting_datetime = posting_date.format('MM/DD/YYYY') + " " + posting_time;
+				 var posting_datetime = posting_date.format('MM/DD/YYYY') + ", " + posting_time;
 
 				 //Define CheckURL function
 				 function checkURLforImage(url) {
