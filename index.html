@@ -1,144 +1,55 @@
-<!DOCTYPE html>
+
 <html>
 <head>
-	<!-- Jquery -->
-	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<!-- Bootstrap -->
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+<title> hs formatting tool SI</title>
+<style>
+ul {
+ list-style-type: none;
+ display: inline;
+}
+li {
+display: inline;
+}
+h1 {
+color: white;
+font-family: impact;
+font-weight: bold;
+}
+#nav {
+text-align: center;
+}
+A:link {text-decoration: none; color: blue; font-family: Arial;}
+A:visited {text-decoration: none}
+A:active {text-decoration: none}
+A:hover {text-decoration: underline; color: white;}
 
-	<!-- Date/Time Picker -->
-	<link href="bower_components/pickadate/lib/themes/default.css" rel="stylesheet">
-	<link href="bower_components/pickadate/lib/themes/default.date.css" rel="stylesheet">
-	<link href="bower_components/pickadate/lib/themes/default.time.css" rel="stylesheet">
-	<link href="bower_components/pickadate/lib/themes/main.css" rel="stylesheet">
-	<script src="bower_components/pickadate/lib/picker.js"></script>
-	<script src="bower_components/pickadate/lib/picker.time.js"></script>
-	<script src="bower_components/pickadate/lib/picker.date.js"></script>
-	<script src="js/papaparse.js"></script>
-	<script src="js/chance.js"></script>
+body {
+background-image:url("http://a1star.com/images/mad-space.gif");
+color: white;
 
-<style type="text/css">
+}
 </style>
-
+<script src="js/sparkle.js"></script>
 </head>
-
 <body>
-	<header>
-		<h1>Hootsuite Formatting Tool</h1>
-	</header>
 
 
-	<div class="tfield">
-		<h2>Range</h2>
-		<input class="timepicker" name="from_time" id="from" type="text" placeholder="From"><br>
-		<input class="timepicker" name="to_time" id="to" type="text" placeholder="To">
-		<br>
-		<button type="button" onclick="genTimesNow()" class="btn btn-default btn-lg">
-		  	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-		</button>
-		 <div style="display:inline-block;">
-			<p><span id="hour"></span>:<span id="min"></span></p>	
-			<div id="displayTime"></div>
-		</div>
-	</div>
-
-	<!-- Parse -->
-	<center>
-			<h3>Content</h3>
-
-					<textarea id="contentCal">Status	Weekday	Date to Post	"[X] Posts/Month
-Post #"	Category	Update	"Link to media (if applicable)
-(image, video, article, website, etc)"	Additional Photo	
-Content QA'd	Thursday	1		NEW YEAR
-					</textarea>
-					<br>
-					<button type="button" onclick="myFunction()">Parse</button>
-					<p id="parsedContent"></p>
-
-	</center>
-
-	<!-- End Moment -->
-
-<script>
 
 
-		// Use Chance
-		var mingen = chance.minute();
-		document.getElementById("min").innerHTML = mingen;
-
-		//Gen Hour
-		var hourgen = chance.hour({twentyfour: true, min:9, max:17 });
-		document.getElementById("hour").innerHTML = hourgen;
+<div id="marquee" style="padding-bottom:300px;">
+<marquee scrolldelay="1200" scrollamount="500">
+<font size="7" face="arial" color="white"><u>.: HOOTSUITE FORMATTING HEAD QUARTERS :.</u></font>
+</marquee>
+</div>
 
 
-		//Start Array Loop
-
-
-		 	 function genTimesNow () {
-		 	 			var arr = new Array;
-						var floor = parseInt($('[name=prefix__from_input__suffix]').val());
-						var roof = parseInt($('[name=prefix__to_input__suffix]').val());
-            console.log(floor);
-            console.log(roof);
-					 		for (i = 0; i < 10; i++){
-					 				 var newhour = chance.hour({twentyfour: true, min:floor, max:roof });
-					 				 var newmin = chance.minute()
-					 				 var display = newhour + ":" + newmin;
-					 				 arr[i] = display; 
-					 		}
-					 		document.getElementById("displayTime").innerHTML = arr;
-
-				}
-        
-				// Date/Time Picker
-					$('.datepicker').pickadate();
-					$('.timepicker').pickatime({
-					  // Escape any “rule” characters with an exclamation mark (!).
-					  format: 'T!ime selected: h:i a',
-					  formatLabel: '<b>h</b>:i <!i>a</!i>',
-					  formatSubmit: 'H',
-					  hiddenPrefix: 'prefix__',
-					  hiddenSuffix: '__suffix'
-					})
-
-			var time_range;
-
-			$(document).ready(function () {
-			  //called when key is pressed in textbox
-			  $("#quantity").keypress(function (e) {
-			     //if the letter is not digit then display error and don't type anything
-			     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-			        //display error message
-			        $("#errmsg").html("Digits Only").show().fadeOut("slow");
-			               return false;
-			    }
-			   });
-			});
-			//Generate random time in given range
-			$( "#target" ).submit(function( event ) {
-				  alert( "Handler for .submit() called." );
-				  event.preventDefault();
-				});
-
-		// End Date/Time Picker
-
-		// Start Parse
-			function myFunction() {
-			    var csvString = document.getElementById("contentCal").value;
-              var output = '';
-              var y = Papa.parse(csvString, {
-                step: function(results) {
-                  output += results.data[0][3] + ',' + results.data[0][0] + '<br>';
-                  console.log("Row:", results.data[0]);
-                }
-              });
-					    document.getElementById("parsedContent").innerHTML = output;
-					}
-		// End Parse
-
-</script>
-
+<div id="nav">
+<ul>
+<li><a href="twitter.html"><img src="http://bniorl.com/library/images/twitter,P20icon_1337028025.png.pagespeed.ce.73bXoU8A0h.png"/>Twitter</a></li>
+<li><a href="gplus.html"><img src="http://icons.iconarchive.com/icons/land-of-web/social-coffee/256/google-plus-icon.png"/>Google Plus</a></li>
+<li><a href="gplus.html"><img style="height:250px;" src="linkedin.png"/>LinkedIn</a></li>
+</ul>
+</div>
 
 </body>
 </html>

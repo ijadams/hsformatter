@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Jquery -->
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Date/Time Picker -->
+	<link href="bower_components/pickadate/lib/themes/default.css" rel="stylesheet">
+	<link href="bower_components/pickadate/lib/themes/default.date.css" rel="stylesheet">
+	<link href="bower_components/pickadate/lib/themes/default.time.css" rel="stylesheet">
+	<link href="bower_components/pickadate/lib/themes/main.css" rel="stylesheet">
+	<script src="bower_components/pickadate/lib/picker.js"></script>
+	<script src="bower_components/pickadate/lib/picker.time.js"></script>
+	<script src="bower_components/pickadate/lib/picker.date.js"></script>
+	<script src="js/papaparse.js"></script>
+	<script src="js/chance.js"></script>
+	<script src="js/moment.js"></script>
+
+<style type="text/css">
+</style>
+
+</head>
+
+<body>
+	<header>
+  <h1>HS Formatting Tool // <span style="color: gray; font-weight:200;">Twitter</span></h1>
+	</header>
+	<!-- Start User Input Section -->
+	<div class="tfield">
+		<h2>Range</h2>
+		<!-- Time Selection -->
+		<input class="timepicker" name="from_time" id="from" type="text" placeholder="From"><br>
+		<input class="timepicker" name="to_time" id="to" type="text" placeholder="To"><br>
+		 <div style="display:none;">
+			<p><span id="hour"></span>:<span id="min"></span></p>	
+			<div style="display:none;" id="displayTime"></div>
+		</div>
+		<!-- Month Selection -->
+		
+	<h2>Month & Year</h2>
+		  <div class="month-picker">
+			  <select name="monthpicker" id="monthpicker"></select><br>
+		  </div> 
+			<!-- Year Selection -->
+			<select name="yearpicker" id="yearpicker"></select>
+
+	</div>
+
+	<!-- Parse -->
+	<center>
+			<h3>Content</h3>
+
+					<textarea id="contentCal" style="font-size:16px;font-style:italic;">Paste Content Calendar Here...(No label row please!)
+					</textarea>
+					<br><br>
+					<div id="parseContainer">
+						<button type="button" onclick="myFunction()">Parse</button></br>
+						<a id="download_link" style="display:none" href="">Download CSV</a>
+						<p style="display:none;" id="parsedContent"></p>
+					</div>
+	</center>
+
+	<script src="js/twitter.js"></script>
+</body>
+</html>

@@ -26,22 +26,27 @@
 
 <body>
 	<header>
-		<h1>Hootsuite Formatting Tool</h1>
+  <h1>HS Formatting Tool // <span style="color: gray; font-weight:200;">Twitter Beta</span></h1>
 	</header>
-
-
+	<!-- Start User Input Section -->
 	<div class="tfield">
 		<h2>Range</h2>
+		<!-- Time Selection -->
 		<input class="timepicker" name="from_time" id="from" type="text" placeholder="From"><br>
-		<input class="timepicker" name="to_time" id="to" type="text" placeholder="To">
-		<br>
-		<button type="button" onclick="genTimesNow()" class="btn btn-default btn-lg">
-		  	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-		</button>
-		 <div style="display:inline-block;">
+		<input class="timepicker" name="to_time" id="to" type="text" placeholder="To"><br>
+		 <div style="display:none;">
 			<p><span id="hour"></span>:<span id="min"></span></p>	
-			<div id="displayTime"></div>
+			<div style="display:none;" id="displayTime"></div>
 		</div>
+		<!-- Month Selection -->
+		
+	<h2>Month & Year</h2>
+		  <div class="month-picker">
+			  <select name="monthpicker" id="monthpicker"></select><br>
+		  </div> 
+			<!-- Year Selection -->
+			<select name="yearpicker" id="yearpicker"></select>
+
 	</div>
 
 	<!-- Parse -->
@@ -65,58 +70,44 @@ Scheduled	Friday	27	11	Product/Publicity	Begin or further your career in #market
 							
 Scheduled	Saturday	28	12	Information	A management degree can help with your career in the business world. Learn about the benefits here. 	http://smallbusiness.chron.com/beneficial-degree-business-management-1505.html	http://www.allbusinessideas.net/wp-content/uploads/2013/04/business-models.jpg
 					</textarea>
-					<br>
-					<button type="button" onclick="myFunction()">Parse</button>
-          <a id="download_link" style="display:none" href="">Download CSV</a>
-					<p id="parsedContent"></p>
-
+					<br><br>
+					<div id="parseContainer">
+						<button type="button" onclick="myFunction()">Parse</button></br>
+						<a id="download_link" style="display:none" href="">Download CSV</a>
+						<p style="display:none;" id="parsedContent"></p>
+					</div>
 	</center>
 
 	<!-- End Moment -->
 
 <script>
-
-		// Use Chance
-		var mingen = chance.minute();
-		document.getElementById("min").innerHTML = mingen;
-
-		//Gen Hour
-		var hourgen = chance.hour({twentyfour: true, min:9, max:17 });
-		document.getElementById("hour").innerHTML = hourgen;
-
-
-		//Start Array Loop
-
-
-		 	 function genTimesNow () {
-		 	 			var arr = new Array;
-						var floor = document.getElementById('from').value;
-						var roof = document.getElementById('to').value;
-					 		for (i = 0; i < 10; i++){
-					 				 var newhour = chance.hour({twentyfour: true, min:floor, max:roof });
-					 				 var newmin = chance.minute()
-					 				 var display = newhour + ":" + newmin;
-					 				 arr[i] = display; 
-					 		}
-					 		document.getElementById("displayTime").innerHTML = arr;
-
+			       
+		// Date/Time Picker
+			//Month Picker
+				for (i = 1; i < 13; i++){
+				    $('#monthpicker').append($('<option />').val(i).html(i));
 				}
+					
+			//Year Picker
+				for (i = new Date().getFullYear(); i < 2020; i++){
+				    $('#yearpicker').append($('<option />').val(i).html(i));
+				}
+					
+			$('.timepicker').pickatime({
+			  // Escape any “rule” characters with an exclamation mark (!).
+			  format: 'T!ime selected: h:i a',
+			  formatLabel: '<b>h</b>:i <!i>a</!i>',
+			  formatSubmit: 'H',
+			  hiddenPrefix: 'prefix__',
+			  hiddenSuffix: '__suffix',
+	            onSet: function(context) {
+	              var obj = $('#' + this.get('id'));
+	              var name = obj.prop('name');
 
-				// Date/Time Picker
-					$('.timepicker').pickatime({
-					  // Escape any “rule” characters with an exclamation mark (!).
-					  format: 'T!ime selected: h:i a',
-					  formatLabel: '<b>h</b>:i <!i>a</!i>',
-					  formatSubmit: 'HH',
-            hiddenSuffix: '_submit',
-            onSet: function(context) {
-              var obj = $('#' + this.get('id'));
-              var name = obj.prop('name');
-
-              console.log($('#from').val());
-              console.log($('[name=' + name + '_submit]').val());
-            }
-					})
+	              console.log($('#from').val());
+	              console.log($('[name=' + name + '_submit]').val());
+	            }
+			})
 
 			var time_range;
 
@@ -141,58 +132,60 @@ Scheduled	Saturday	28	12	Information	A management degree can help with your care
 
 		// Start Parse
 			function myFunction() {
-        // Parse TSV from Google Docs
-        var csvString = document.getElementById("contentCal").value;
+		// Parse TSV from Google Docs
+	    var csvString = document.getElementById("contentCal").value;
         var output = '';
         var results = Papa.parse(csvString, {
-          complete: function(results) {
-            output += results.data[0][3] + ',' + results.data[0][0] + '<br>';
-            console.log("Row:", results.data[0]);
-          }
-        });
+                complete: function(results) {
+                  output += results.data[0][3] + ',' + results.data[0][0] + '<br>';
+                  console.log("Row:", results.data[0]);
+                }
+              });
 
-        // Get time range
+        	// Get time range
+			var floor = parseInt($('[name=prefix__from_time__suffix]').val());
+			var roof = parseInt($('[name=prefix__to_time__suffix]').val()) - 1;
 
-        // Get month to post
-        var month = 2;
+			// Get month to post ***STill need to CreatE USER FORM FOR MONTH 
+			var month = parseInt($('#monthpicker').val()) - 1;
+			
+			// Get year to post ***StillNeed To CreatE User Form For YEAR
+			var year = parseInt($('#yearpicker').val());
 
-        // Get year to post
-        var year = 2015;
+			// Format array of output values
+			var output_array = $.map(results.data, function(row) {
+				// Gen random times
+ 				 var hour = chance.hour({twentyfour: true, min:floor, max:roof });
+				 var minute = chance.minute();
+				 var posting_time = hour + ":" + minute;
 
-        // Format array of output values
-        var output_array = $.map(results.data, function(row) {
-          // Generate random times
-          var hour = 10;
-          var minute = 15;
-          var posting_time = hour + ':' + minute;
+				 // Format date of posting
+				 var posting_date = moment(new Date(year, month, row[2]));
+				 var posting_datetime = posting_date.format('MM/DD/YYYY') + " " + posting_time;
 
-          // Format date of posting
-          var posting_date = moment(new Date(year, month, row[2]));
+				 // Drop empty rows so they dont gen date/times
+				 if (row[2] == "" && row[5] == "") {
+				 	return [];
+				 } else {
+					 return [[
+					 	posting_datetime,
+					 	row[5],
+					 	row[6],
+					 	row[7]
+				 ]]};
+			});
+		
+			// Convert output array to CSV
+			var csv = Papa.unparse(output_array);
 
-          return [[
-            posting_date.format('MM/DD/YYYY'),
-            posting_time,
-            row[5],
-            row[6],
-            row[7]
-          ]];
-        });
-
-        // Convert output array to CSV
-        var csv = Papa.unparse(output_array);
-
-        // Send CSV file to browser
-
-        document.getElementById("parsedContent").innerHTML = csv;
-        $('#download_link').show().prop('href', "data:application/octet-stream," + encodeURIComponent(csv)).prop('download', 'hootsuite.csv');
+			// Send CSV file to browser
+				
+			document.getElementById("parsedContent").innerHTML = csv;
+	        $('#download_link').show().prop('href', "data:application/octet-stream," + encodeURIComponent(csv)).prop('download', 'hootsuite.csv');
 					}
 		// End Parse
 
-
-
-
 </script>
-
 
 </body>
 </html>
