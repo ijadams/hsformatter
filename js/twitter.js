@@ -112,5 +112,5 @@
 				
 			document.getElementById("parsedContent").innerHTML = csv;
 	        $('#download_link').show().prop('href', "data:application/octet-stream," + encodeURIComponent(csv)).prop('download', 'hootsuite.csv');
-					
+}					
 		// End Parse
