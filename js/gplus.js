@@ -51,7 +51,7 @@
 			function myFunction() {
 		// Parse TSV from Google Docs
 	    var csvString = document.getElementById("contentCal").value;
-      //Convert to utf8 
+      //Convert to utf8 http://ecmanaut.blogspot.ca/2006/07/encoding-decoding-utf8-in-javascript.html 
       var csvString = csvString
          .replace(/[\u2018\u2019]/g, "'")
          .replace(/[\u201C\u201D]/g, '"');
