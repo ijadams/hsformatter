@@ -51,6 +51,10 @@
 			function myFunction() {
 		// Parse TSV from Google Docs
 	    var csvString = document.getElementById("contentCal").value;
+      //Convert to utf8 
+      var csvString = csvString
+         .replace(/[\u2018\u2019]/g, "'")
+         .replace(/[\u201C\u201D]/g, '"');
         var output = '';
         var results = Papa.parse(csvString, {
                 complete: function(results) {
@@ -63,10 +67,10 @@
 			var floor = parseInt($('[name=prefix__from_time__suffix]').val());
 			var roof = parseInt($('[name=prefix__to_time__suffix]').val()) - 1;
 
-			// Get month to post ***STill need to CreatE USER FORM FOR MONTH 
+			// Get month to post 
 			var month = parseInt($('#monthpicker').val()) - 1;
 			
-			// Get year to post ***StillNeed To CreatE User Form For YEAR
+			// Get year to post
 			var year = parseInt($('#yearpicker').val());
 
 			// Format array of output values

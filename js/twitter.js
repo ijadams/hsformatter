@@ -51,6 +51,11 @@
 			function myFunction() {
 		// Parse TSV from Google Docs
 	    var csvString = document.getElementById("contentCal").value;
+      //Convert to utf8
+      var csvString = csvString
+         .replace(/[\u2018\u2019]/g, "'")
+         .replace(/[\u201C\u201D]/g, '"');
+
         var output = '';
         var results = Papa.parse(csvString, {
                 complete: function(results) {
